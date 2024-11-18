@@ -1,0 +1,23 @@
+const fs = require('fs');
+const express = require('express');
+const app = express();
+
+// Dados de exemplo
+const dados = [
+  { nome: 'John', idade: 30 },
+  { nome: 'Jane', idade: 25 }
+];
+
+// Rota para salvar dados em um arquivo JSON
+app.post('/salvar', (req, res) => {
+  fs.writeFile('dados.json', JSON.stringify(dados), (err) => {
+    if (err) {
+      return res.status(500).send('Erro ao salvar dados');
+    }
+    res.send('Dados salvos com sucesso!');
+  });
+});
+
+app.listen(3000, () => {
+  console.log('Servidor rodando em http://localhost:3000');
+});
