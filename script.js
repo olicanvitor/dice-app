@@ -4,9 +4,9 @@ function rollDice() {
 }
 
 // Selecionar elementos
-const rollButton = document.getElementById('rollDice');
-const resultDisplay = document.getElementById('result');
-const historyList = document.getElementById('historyList');
+const rollButton = document.getElementById('rollDice'); // Botão de rolar dado
+const resultDisplay = document.getElementById('result'); // Exibição do resultado
+const historyList = document.getElementById('historyList'); // Lista de histórico
 
 // Adicionar evento de clique ao botão
 rollButton.addEventListener('click', () => {
@@ -17,10 +17,10 @@ rollButton.addEventListener('click', () => {
 
 // Função para adicionar o resultado ao histórico
 function addToHistory(result) {
-  const listItem = document.createElement('li'); // Criar um item de lista
-  listItem.textContent = `Você rolou: ${result}`; // Adicionar texto
-  historyList.appendChild(listItem); // Inserir na lista
+  const listItem = document.createElement('li'); // Criar um item da lista
+  listItem.textContent = `Você rolou: ${result}`; // Definir o texto do item
+  historyList.appendChild(listItem); // Adicionar o item na lista
 
-  // Rolar automaticamente o histórico para o item mais recente
+  // Fazer a lista rolar para o final automaticamente
   historyList.scrollTop = historyList.scrollHeight;
 }
