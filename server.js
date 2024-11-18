@@ -1,40 +1,33 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
+const socket = io(); // Conectar ao servidor
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+// Selecionar elementos
+const rollButton = document.getElementById('rollDice');
+const resultDisplay = document.getElementById('result');
+const historyList = document.getElementById('historyList');
 
-let rollHistory = []; // Histórico global de rolagens
+// Função para gerar um número aleatório
+function rollDice() {
+  return Math.floor(Math.random() * 6) + 1;
+}
 
-// Rota para servir o frontend
-app.use(express.static('public'));
-
-// WebSocket - Conexões
-io.on('connection', (socket) => {
-  console.log('Um usuário se conectou!');
-
-  // Enviar histórico atual para o cliente conectado
-  socket.emit('updateHistory', rollHistory);
-
-  // Ouvir rolagens enviadas pelo cliente
-  socket.on('newRoll', (roll) => {
-    rollHistory.push(roll); // Adicionar ao histórico global
-    if (rollHistory.length > 50) rollHistory.shift(); // Limitar a 50 entradas
-
-    // Enviar atualização para todos os clientes
-    io.emit('updateHistory', rollHistory);
+// Atualizar o histórico na interface
+function updateHistory(rolls) {
+  historyList.innerHTML = ''; // Limpar histórico existente
+  rolls.forEach((roll) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `Você rolou: ${roll}`;
+    historyList.appendChild(listItem);
   });
+}
 
-  // Cliente desconectado
-  socket.on('disconnect', () => {
-    console.log('Um usuário se desconectou!');
-  });
+// Enviar nova rolagem para o servidor
+rollButton.addEventListener('click', () => {
+  const result = rollDice();
+  resultDisplay.textContent = result; // Mostrar resultado localmente
+  socket.emit('newRoll', result); // Enviar resultado para o servidor
 });
 
-// Iniciar servidor
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+// Ouvir atualizações do histórico do servidor
+socket.on('updateHistory', (rolls) => {
+  updateHistory(rolls);
 });
