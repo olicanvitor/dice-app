@@ -20,11 +20,36 @@ function updateHistory(rolls) {
   });
 }
 
+// Função para salvar no LocalStorage
+function saveHistory(rolls) {
+  localStorage.setItem('history', JSON.stringify(rolls)); // Salvar o histórico como uma string JSON
+}
+
+// Função para carregar o histórico do LocalStorage
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem('history')) || []; // Carregar o histórico ou um array vazio
+  updateHistory(history); // Atualizar a interface com o histórico
+}
+
+// Carregar o histórico ao carregar a página
+loadHistory();
+
 // Enviar nova rolagem para o servidor
 rollButton.addEventListener('click', () => {
   const result = rollDice();
   resultDisplay.textContent = result; // Mostrar resultado localmente
-  socket.emit('newRoll', result); // Enviar resultado para o servidor
+
+  // Carregar o histórico do LocalStorage
+  const history = JSON.parse(localStorage.getItem('history')) || [];
+
+  // Adicionar a nova rolagem ao histórico
+  history.push(result);
+
+  // Salvar o histórico atualizado no LocalStorage
+  saveHistory(history);
+
+  // Enviar resultado para o servidor
+  socket.emit('newRoll', result);
 });
 
 // Ouvir atualizações do histórico do servidor
