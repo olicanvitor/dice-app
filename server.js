@@ -20,14 +20,15 @@ function updateHistory(rolls) {
   });
 }
 
-// Função para salvar no LocalStorage
+// Função para salvar no Cookie
 function saveHistory(rolls) {
-  localStorage.setItem('history', JSON.stringify(rolls)); // Salvar o histórico como uma string JSON
+  // Salvando o histórico no cookie (por padrão, expira em 1 dia)
+  Cookies.set('history', JSON.stringify(rolls), { expires: 1 });
 }
 
-// Função para carregar o histórico do LocalStorage
+// Função para carregar o histórico do Cookie
 function loadHistory() {
-  const history = JSON.parse(localStorage.getItem('history')) || []; // Carregar o histórico ou um array vazio
+  const history = JSON.parse(Cookies.get('history') || '[]'); // Carregar histórico ou um array vazio
   updateHistory(history); // Atualizar a interface com o histórico
 }
 
@@ -39,13 +40,13 @@ rollButton.addEventListener('click', () => {
   const result = rollDice();
   resultDisplay.textContent = result; // Mostrar resultado localmente
 
-  // Carregar o histórico do LocalStorage
-  const history = JSON.parse(localStorage.getItem('history')) || [];
+  // Carregar o histórico dos Cookies
+  const history = JSON.parse(Cookies.get('history') || '[]');
 
   // Adicionar a nova rolagem ao histórico
   history.push(result);
 
-  // Salvar o histórico atualizado no LocalStorage
+  // Salvar o histórico atualizado nos Cookies
   saveHistory(history);
 
   // Enviar resultado para o servidor
