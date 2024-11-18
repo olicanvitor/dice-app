@@ -7,48 +7,89 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      width: 80%;
+      max-width: 900px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #fff;
+    }
+
+    .main {
+      flex: 2;
+      padding: 20px;
+    }
+
+    .history {
+      flex: 1;
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+
+    .history h2 {
+      margin-top: 0;
       text-align: center;
-      margin-top: 50px;
+    }
+
+    .history ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .history li {
+      background: #444;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
     button {
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    button:hover {
+      background-color: #0056b3;
     }
 
     p {
       font-size: 18px;
-      margin-top: 20px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 30px;
-    }
-
-    .history {
-      text-align: left;
-      font-size: 16px;
-    }
-
-    .history ul {
-      list-style-type: none;
-      padding: 0;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
-  <h1>Simulador de Dado</h1>
   <div class="container">
-    <div>
+    <!-- Área principal -->
+    <div class="main">
+      <h1>Simulador de Dado</h1>
       <button id="rollDice">Rolar Dado</button>
       <p>Resultado: <span id="result">-</span></p>
     </div>
+
+    <!-- Campo de mensagens (Histórico) -->
     <div class="history">
-      <h2>Histórico de Rolagens</h2>
+      <h2>Histórico</h2>
       <ul id="historyList"></ul>
     </div>
   </div>
