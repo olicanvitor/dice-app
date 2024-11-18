@@ -1,0 +1,2 @@
+# dice-app
+Dado Assimilação
