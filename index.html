@@ -3,13 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rolar Dado</title>
+  <title>Simulador de Dado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    p {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .history {
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .history ul {
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
 </head>
 <body>
   <h1>Simulador de Dado</h1>
-  <button id="rollDice">Rolar Dado</button>
-  <p>Resultado: <span id="result">-</span></p>
-
+  <div class="container">
+    <div>
+      <button id="rollDice">Rolar Dado</button>
+      <p>Resultado: <span id="result">-</span></p>
+    </div>
+    <div class="history">
+      <h2>Histórico de Rolagens</h2>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
